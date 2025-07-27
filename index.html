@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sistema de Riego Hunter++</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Columna izquierda: Formulario -->
+    <section class="form-section">
+     <h1>🌿 Sistema de Riego ++</h1>
+
+<select id="langSelector" style="float: right; margin-bottom: 10px;">
+  <option value="es">🇪🇸 Español</option>
+  <option value="en">🇺🇸 English</option>
+</select>
+
+      <form id="riegoForm">
+        <fieldset>
+          <legend>Información General</legend>
+          <table>
+            <tr>
+              <th>Job Name</th>
+              <th>DCV Location</th>
+              <th>Master Valve</th>
+              <th>Flow Sensor</th>
+            </tr>
+            <tr>
+              <td><input type="text" id="jobName" placeholder="Ej: Parque Central" required /></td>
+              <td><input type="text" id="dcvLocation" placeholder="Ej: Near main valve" /></td>
+              <td><input type="text" id="masterValve" placeholder="Ej: Valve 1" /></td>
+              <td><input type="text" id="flowSensor" placeholder="Ej: FS-200" /></td>
+            </tr>
+          </table>
+        </fieldset>
+
+        <fieldset>
+          <legend>Zonas de Riego</legend>
+          <table id="zonesTable">
+            <tr>
+              <th>Zone</th>
+              <th>Decode</th>
+              <th>Location</th>
+              <th><label for="areaType" id="labelAreaType">Type of Area:</label>
+<select id="areaType">
+  <option value="lawn" id="optionLawn">Lawn</option>
+  <option value="bed" id="optionBed">Bed</option>
+</select></th>
+              <th><label for="headType" id="labelHeadType">Type of Heads:</label>
+<select id="headType">
+  <option value="spray" id="optionSpray">Spray</option>
+  <option value="rotor" id="optionRotor">Rotor</option>
+</select>
+</th>
+              <th>Run Time (min)</th>
+              <th>Foto</th>
+              <th>GPS Location</th>
+              <th>Mapa</th>
+             
+            </tr>
+            <!-- Filas dinámicas -->
+          </table>
+          <button type="button" onclick="addZone()">➕ Agregar Zona</button>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit">💾 Guardar Proyecto</button>
+          <button type="button" onclick="loadProjects()">📂 Ver Locales</button>
+          <button type="button" onclick="loadProjectsFromSheet()">☁️ Ver desde Google Sheets</button>
+        </div>
+
+        <div id="spinner" class="spinner" style="display:none;">
+          <span>⏳</span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Columna derecha: Proyectos guardados y mapa -->
+    <section class="projects-section">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Buscar por nombre, zona o ubicación"
+        oninput="filtrarProyectos()"
+      />
+      <div id="savedProjects"></div>
+
+      <div id="map"></div>
+
+      <div class="export-buttons">
+        <button onclick="exportToExcel()">📊 Exportar a Excel</button>
+        <button onclick="exportToPDF()">📄 Exportar a PDF</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
